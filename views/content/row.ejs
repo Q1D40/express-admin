@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+    <div class="panel-heading"><a target="_blank" href="<%= content.url %>"><%= content.title %></a></div>
+    <div class="panel-body">
+        <%= content.desc %>
+    </div>
+
+    <div class="input-group" style="width:140px; position:relative;">
+      <input type="text" class="form-control" placeholder="" value="<%= content.weight %>" style="height:28px;">
+      <span class="input-group-btn">
+        <button content_id = "<%= content._id %>" class="btn btn-default editWeight" type="button"><span class="glyphicon glyphicon-ok"></span></button>
+      </span>
+    </div>
+</div>

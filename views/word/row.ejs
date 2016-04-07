@@ -1,0 +1,9 @@
+<tr>
+    <td><%= word.word %></td>
+    <td><%= word.timeStamp.getFullYear() %>.<%= word.timeStamp.getMonth() %>.<%= word.timeStamp.getDay() %></td>
+    <td>
+        <a href="/content/list?wd=<%= word.word %>" target="_blank" type="button" class="btn btn-default col-md-3">
+            <span class="glyphicon glyphicon-th-list"></span>
+        </a>
+    </td>
+</tr>

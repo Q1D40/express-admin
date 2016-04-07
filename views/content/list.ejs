@@ -1,0 +1,66 @@
+<% include ../general/header %>
+
+<div id="rightMain" class="col-md-12" role="main">
+    <form id="searchForm" role="form" action="" method="GET">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="text" name="wd" class="form-control" placeholder="词条" value="<% if(wd){ %><%= wd %><% } %>">
+            </div>
+            <div class="btn-group col-md-2">
+                <button id="searchbtn" type="button" class="btn btn-primary">查询</button>
+                <button id="newPageSearchBtn" type="button" class="btn btn-primary">在新页面查询</button>
+            </div>
+        </div>
+    </form>
+
+    <div style="height: 30px;"></div>
+
+    <div id="list">
+    <% contents.forEach(function(content){ %>
+    <% include row %>
+    <% }) %>
+    </div>
+
+</div>
+
+<script>
+    $("#searchbtn").click(function(){
+        $("#searchForm").attr("target", "_self");
+        $("#searchForm").submit();
+    });
+    $("#newPageSearchBtn").click(function(){
+        $("#searchForm").attr("target", "_blank");
+        $("#searchForm").submit();
+    });
+    $("#list").delegate(".editWeight","click",function(){
+        var content_id = $(this).attr("content_id");
+        var weight = $(this).parent().parent().children("input").val();
+        weight = Number(weight);
+        if(isNaN(weight) || weight < 0) weight = 0;
+        $.ajax({
+            type:'POST',
+            url:'/content/change-weight',
+            data:{
+                '_id': content_id,
+                'weight': weight
+            },
+            success:function(data){
+                if(data.err){
+                    alert(data.err);
+                }else{
+                    var queryString = window.location.search;
+                    $.ajax({
+                        type:'GET',
+                        url:'/content/list' + queryString,
+                        data:{'ajax': 1},
+                        success:function(data){
+                            $("#list").html(data);
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<% include ../general/footer %>
